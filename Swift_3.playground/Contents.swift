@@ -11,30 +11,6 @@ let votes = [1,2,3,4,5]
 votes.total
 
 
-
-//Extensions of Collection with Double Type
-extension Collection where Iterator.Element == Double, Index == Int {
-    
-    var total: Iterator.Element {
-        return reduce(0,+)
-    }
-    
-    var average: Iterator.Element {
-        return isEmpty ? 0 : (reduce(0,+))/Double((endIndex-startIndex))
-    }
-}
-
-let doubleItems = [1.0,2.0,3.0,4.0]
-let total = doubleItems.total
-let avg = doubleItems.average
-print(total,avg)
-
-
-
-
-
-
-
 //Extensions of Array with Comparable Protocol
 extension Array where Element: Comparable {
     
@@ -70,39 +46,7 @@ items.appendUnique(item: 5)
 items.appendUnique(item: 4)
 
 
-
-
-
-
-//Extensions of Array with Custom Protocol
-protocol StringProtocol {
-    func hasPrefix(_ prefix: String) -> Bool
-    func hasSuffix(_ suffix: String) -> Bool
-    func lowercased() -> String
-}
-
-extension String: StringProtocol {}
-
-extension Array where Element: StringProtocol {
-    
-    func filterByPrefix(prefix: String) -> [Element] {
-        return filter { $0.lowercased().hasPrefix(prefix.lowercased()) }
-    }
-    
-    func filterBySuffix(suffix: String) -> [Element] {
-        return filter { $0.lowercased().hasSuffix(suffix.lowercased()) }
-    }
-}
-
-let strings = ["Mohit", "Abhas", "Piyush"]
-strings.filterByPrefix(prefix: "a")
-
-
-
-
-
 //Extensions of Swift Generic Data Types with Custom Protocol
-
 protocol MyProtocol {}
 
 extension Int: MyProtocol {}
@@ -120,7 +64,6 @@ var stringStack = MyStack<String>()
 stringStack.append(item: "piyush")
 stringStack.append(item: "Abhas")
 print(stringStack.items)
-
 
 
 
@@ -150,7 +93,6 @@ one == two
 one < two
 
 
-
 //Class Constraint to Generic Class
 class Media { }
 class Clip { }
@@ -164,28 +106,3 @@ class Album<T: Media> {
 let photo = Album<Photo>()
 let movie = Album<Movie>()
 //let clip = Album<Clip>() //error
-
-
-//Generic structs
-struct Stack<T, E: Hashable> {
-    
-    var items: Array<T> = Array<T>()
-    var dict = [E: T]()
-    
-    mutating func push(item: T) {
-        items.append(item)
-    }
-    
-    mutating func pop() -> T?  {
-        guard let lastItem = items.popLast() else {
-            return nil
-        }
-        return lastItem
-    }
-}
-
-var myStack = Stack<String, Int>()
-myStack.push(item: "Piyush")
-myStack.push(item: "Abhas")
-myStack.push(item: "Mohit")
-myStack.items
